@@ -15,6 +15,8 @@
     if (isset($_SESSION['username'])) {
         if (isset($_POST['content'])) {
             $content=$_POST['content'];
+            //replace \n
+            //$content=str_replace("<br>", "\r\n", $content);
             $username=$_SESSION['username'];
             $time = date('Y-m-d H:i:s');
             $md5 = md5($time." ".$username);

@@ -80,7 +80,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="post-content">
-                        <p><?php echo $row['content']; ?></p>
+                        <p><?php echo nl2br($row['content']); ?></p>
                     </div>
                     <hr>
                     <div class="row">
@@ -92,7 +92,7 @@
                             while ($row_reply=$result_reply->fetch_assoc()) {
                         ?>
                         <div class="col-sm-1"><strong><?php echo $row_reply['username'] ?>:</strong></div>
-                        <div><?php echo $row_reply['content'] ?></div>
+                        <div><?php echo nl2br($row_reply['content']) ?></div>
                         <?php
                             }//while
                         }//if
