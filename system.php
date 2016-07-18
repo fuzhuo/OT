@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>OT统计</title>
+    <title>统计</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@
        </div>
        <div>
           <ul class="nav navbar-nav">
-             <li class="active"><a href="#">OT统计</a></li>
+             <li class="active"><a href="#">统计</a></li>
              <li class=""><a href="forum.php">闲聊</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -77,11 +77,8 @@
     <script src="jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <div class="container">
-        <h1 style="text-align:center">OT统计</h1>
-        <p><strong>单击点击</strong>表格区域，即改变自己对应的信息，名字按注册时间排序.</p>
-        <p>大家一起维护才能保证数据的准确性，显示从今天起前两个月的信息，仅供参考，加前最好问问对方</p>
-        <p>最好维持小规模，如果需要可以自己搭一个，源码在这里<a href="https://github.com/fuzhuo/OT">fuzhuo/OT</a></p>
-        <p>如有疑问，去<a href="forum.php">闲聊</a>里面吐槽吧!</p>
+        <!--h1 style="text-align:center">统计</h1-->
+        <p><strong>仅供参考</strong>以防止因忘记而产生错误冲突，如有疑问，去<a href="forum.php">闲聊</a>里面吐槽吧!</p>
 
         <table class="table table-bordered">
             <thead>
@@ -111,9 +108,9 @@
                                 if ($row=$result->fetch_assoc()) {
                                     $find=true;
                                     if ($user_name == $usertable && $user_name == $userstr) {
-                                        echo "<td id=\"$i $b\" class=\"success cell\" style=\"color:#0000FF\">自用</td>";
+                                        echo "<td id=\"$i $b\" class=\"success cell\" style=\"color:#0000FF\">自己</td>";
                                     } else if ($userstr == $usertable) {
-                                        echo "<td id=\"$i $b\" class=\"success cell\">自用</td>";
+                                        echo "<td id=\"$i $b\" class=\"success cell\">自己</td>";
                                     } else {
                                         if ($userstr == $user_name) {
                                             echo "<td id=\"$i $b\" class=\"active cell\" style=\"color:#0000FF\">".$userstr."+</td>";

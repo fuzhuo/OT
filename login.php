@@ -24,7 +24,7 @@
             if (isset($_SESSION['username'])) {
                 echo "<p>已经登录".$_SESSION['username']."</p>";
             } else {
-                echo "<p>请登录，新用户请点击注册</p>";
+                //echo "<p>请登录，新用户请点击注册</p>";
             }
         ?>
         <script src="jquery.min.js"></script>

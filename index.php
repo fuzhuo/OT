@@ -13,7 +13,7 @@ if ($conn->connect_error) {
     if (!$result=$conn->query($sql)) {
         die("没有ot数据库，而且创建失败了");
     }
-    $sql = "CREATE TABLE if not exists user(username char(255), password char(255))";
+    $sql = "CREATE TABLE if not exists user(username char(255), md5 char(255))";
     if (!$result=$conn->query($sql)) {
         die("没有user表，而且创建失败了");
     }
@@ -54,15 +54,14 @@ if (isset($_POST['password']) && isset($_POST['password1']) && isset($_POST['pas
         $_SESSION['username']=$username;
     } else {
         $conn->close();
-        header("Location:error_insert_user.php");
+        die("ERROR insert user:".$sql);
     }
     //add a table named with username
     $sql = "CREATE TABLE ".$username."(date date, username char(255))";
     $result = $conn->query($sql);
     if (!$result) {
         $conn->close();
-        header("Location:create_table_error.php");
-        eixt();
+        die("create table error:".$sql);
     }
     header("Location:system.php");
     $conn->close();
