@@ -20,7 +20,8 @@ if (isset($_SESSION['username'])) {
     $username=$_POST['username'];
     $password1=$_POST['password1'];
     $password2=$_POST['password2'];
-    $sql = "insert into user(username, password) value('$username', '$password1')";
+    $md5=md5($password1);
+    $sql = "insert into user(username, md5) value('$username', '$md5')";
     $result = $conn->query($sql);
     if ($result) {
         $_SESSION['username']=$username;
@@ -41,12 +42,12 @@ if (isset($_SESSION['username'])) {
 } else if (isset($_POST['username']) && isset($_POST['password'])) {
     $username=$_POST['username'];
     $password=$_POST['password'];
-    $sql="select * from user where username='$username' and password='$password'";
+    $md5 = md5($password);
+    $sql="select * from user where username='$username' and md5='$md5'";
     if ($result=$conn->query($sql)) {
         if($row=$result->fetch_assoc()) {
             $user_name=$row['username'];
             $_SESSION['username']=$username;
-            $_SESSION['password']=$password;
             $_SESSION['login_error']=FALSE;
             echo "Login ok";
             $conn->close();

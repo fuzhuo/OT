@@ -76,8 +76,8 @@
     <script src="js/bootstrap.min.js"></script>
     <div class="container">
         <h1 style="text-align:center">OT统计</h1>
-        <p><strong>单击点击</strong>表格区域，即改变自己对应的信息，名字按拼音排序.</p>
-        <p>大家一起维护才能保证数据的准确性，显示从今天起前两个的信息，仅供参考，加前最好问问对方</p>
+        <p><strong>单击点击</strong>表格区域，即改变自己对应的信息，名字按注册时间排序.</p>
+        <p>大家一起维护才能保证数据的准确性，显示从今天起前两个月的信息，仅供参考，加前最好问问对方</p>
         <p>如有疑问，去<a href="forum.php">闲聊</a>里面吐槽吧!</p>
 
         <table class="table table-bordered">
@@ -92,7 +92,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php for($i=1; $i<=60; $i++) {
+                <?php for($i=60; $i>=1; $i--) {
                 ?>
                 <tr>
                     <?php
