@@ -19,7 +19,27 @@ if ($conn->connect_error) {
     }
 }
 
-if (isset($_SESSION['username'])) {
+if (isset($_POST['password']) && isset($_POST['password1']) && isset($_POST['password2'])) {
+    $password = $_POST['password'];
+    $newpassword = $_POST['password1'];
+    $username=$_SESSION['username'];
+    
+    $md5 = md5($password);
+    $sql="select * from user where username='$username' and md5='$md5'";
+    if ($result=$conn->query($sql)) {
+        if($row=$result->fetch_assoc()) {
+            $md5 = md5($newpassword);
+            $sql = "UPDATE user set md5='$md5' where username='$username'";
+            if ($result_change=$conn->query($sql)) {
+                $_SESSION['change_password_error']=0;
+                header("Location:index.php");
+                exit();
+            }
+        }
+    }
+    $_SESSION['change_password_error']=1;
+    header("Location:changepassword.php");
+} else if (isset($_SESSION['username'])) {
     header("Location:system.php");
     exit();
 } else if (isset($_POST['username']) && isset($_POST['password1']) && isset($_POST['password2'])) {
