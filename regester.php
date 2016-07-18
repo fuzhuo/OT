@@ -31,7 +31,7 @@
                 <div class="form-horizontal">
                     <label for="name" class="col-sm-4 control-label">用户名</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="最好使用Qualpass用户名">
                     </div>
                 </div>
                 <span id="checkname"></span>

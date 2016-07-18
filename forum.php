@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>水吧</title>
+    <title>闲聊</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -27,14 +27,16 @@
     }
     $user_name=$_SESSION['username'];
     //connect to db
-    //db format create table _post(time datetime, author char(255), title TEXT, content TEXT);
-    $conn = new mysqli('192.168.2.246','root','vmmvmm','ot');
+    $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
     if ($conn->connect_error) {
         die("Error, connect db failed");
     } else {
         //echo "Connect db successed";
+        $sql = "CREATE TABLE IF NOT EXISTS _post(time datetime NOT NULL, username char(255), checksum varchar(32) NOT NULL, reply varchar(32) NOT NULL, content TEXT NOT NULL)";
+        if (!$result=$conn->query($sql)) {
+            die("Error, create table failed");
+        }
     }
-    //print_r($users);
     ?>
      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
        <div class="navbar-header">
@@ -58,12 +60,65 @@
        </div>
     </nav>
         <div class="container">
-            <div class="panel panel-primary">
+            <?php
+            $sql="select * from _post where reply=md5('post') order by time desc";//Only for post
+            if ($result=$conn->query($sql)) {
+                while ($row=$result->fetch_assoc()) {
+            ?>
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">这个是标题 zfu 2016-07-22 18:40</h3>
+                    <div class="row">
+                        <div class="col-sm-1">
+                        <?php echo $row['username']; ?>
+                        </div>
+                        <div class="col-sm-offset-7 col-sm-4 text-right">发布于 <?php echo $row['time'];?></div>
+                    </div>
                 </div>
                 <div class="panel-body">
-                <p>内容就是这些啦，你赶快布局一下</p>
+                    <div class="post-content">
+                        <p><?php echo $row['content']; ?></p>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <?php //loop here to show replys
+                        $post_md5=md5($row['time']." ".$row['username']);
+                        $sql_reply="select * from _post where reply='$post_md5'";
+                        //echo $sql_reply;
+                        if ($result_reply=$conn->query($sql_reply)) {
+                            while ($row_reply=$result_reply->fetch_assoc()) {
+                        ?>
+                        <div class="col-sm-1"><strong><?php echo $row_reply['username'] ?>:</strong></div>
+                        <div><?php echo $row_reply['content'] ?></div>
+                        <?php
+                            }//while
+                        }//if
+                        ?>
+                    </div>
+                    <form role="form" class="row post-reply" method="post" action="post_or_reply.php">
+                        <div class="form-group col-sm-11">
+                            <input type="text" name="reply" class="form-control" placeholder="输入来回复">
+                            <input type="hidden" name="md5" value=<?php echo "$post_md5"; ?>>
+                        </div>
+                        <div class="form-group col-sm-1">
+                            <button class="btn btn-primary pull-right" type="submit">回复</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <?php
+                }//while
+            }//if
+            ?>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form role="form" class="row" method="post" action="post_or_reply.php">
+                        <div class="form-group col-sm-12">
+                            <textarea class="post-new" placeholder="请输入新话题内容" type="submit" name="content"></textarea>
+                        </div>
+                        <div class="form-group col-sm-offset-5 col-sm-1">
+                            <button class="btn btn-primary" type="submit">发表新话题</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

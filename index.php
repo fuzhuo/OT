@@ -2,16 +2,21 @@
 //This file is using to check login
 session_start();
 
+$conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
+if ($conn->connect_error) {
+    die("连接失败".$conn->connect_error);
+    header("Location:error_connect_db.php");
+} else {
+    $sql = "CREATE TABLE if not exists user(username char(255), password char(255))";
+    if (!$result=$conn->query($sql)) {
+        die("没有user数据库，而且创建失败了");
+    }
+}
 if (isset($_SESSION['username'])) {
     header("Location:system.php");
     exit();
 } else if (isset($_POST['username']) && isset($_POST['password1']) && isset($_POST['password2'])) {
     //add user here, need create a table for this user
-    $conn = new mysqli('192.168.2.246','root','vmmvmm','ot');
-    if ($conn->connect_error) {
-        die("连接失败".$conn->connect_error);
-        header("Location:error_connect_db.php");
-    }
     $username=$_POST['username'];
     $password1=$_POST['password1'];
     $password2=$_POST['password2'];
@@ -34,10 +39,6 @@ if (isset($_SESSION['username'])) {
     header("Location:system.php");
     $conn->close();
 } else if (isset($_POST['username']) && isset($_POST['password'])) {
-    $conn = new mysqli('192.168.2.246','root','vmmvmm','ot');
-    if ($conn->connect_error) {
-        die("连接失败".$conn->connect_error);
-    }
     $username=$_POST['username'];
     $password=$_POST['password'];
     $sql="select * from user where username='$username' and password='$password'";

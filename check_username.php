@@ -4,7 +4,7 @@
     if ($name=="user") {
         die(json_encode(array('pass'=>0, 'love'=>"已经有名为user的表，不能建立")));
     }
-    $conn = new mysqli('192.168.2.246','root','vmmvmm','ot');
+    $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
     if ($conn->connect_error) {
         die(json_encode(array('pass'=>2, 'love'=>"连接失败".$conn->connect_error)));
     }

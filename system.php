@@ -27,7 +27,7 @@
         }
         $user_name=$_SESSION['username'];
         //connect to db
-        $conn = new mysqli('192.168.2.246','root','vmmvmm','ot');
+        $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
         if ($conn->connect_error) {
             die("Error, connect db failed");
         } else {
@@ -76,8 +76,9 @@
     <script src="js/bootstrap.min.js"></script>
     <div class="container">
         <h1 style="text-align:center">OT统计</h1>
-        <p>大家一起维护才能保证数据的准确性，显示从今天起前两个月前信息，仅供参考，加前最好问问对方</p>
-        <p>只需点击表格相关区域，即改变自己对应的信息，名字按拼音排序.</p>
+        <p><strong>单击点击</strong>表格区域，即改变自己对应的信息，名字按拼音排序.</p>
+        <p>大家一起维护才能保证数据的准确性，显示从今天起前两个的信息，仅供参考，加前最好问问对方</p>
+        <p>如有疑问，去<a href="forum.php">闲聊</a>里面吐槽吧!</p>
 
         <table class="table table-bordered">
             <thead>
@@ -106,7 +107,7 @@
                             if ($result=$conn->query($sql)) {
                                 if ($row=$result->fetch_assoc()) {
                                     $find=true;
-                                    if ($user_name == $usertable) {
+                                    if ($user_name == $usertable && $user_name == $userstr) {
                                         echo "<td id=\"$i $b\" class=\"success cell\" style=\"color:#0000FF\">自用</td>";
                                     } else if ($userstr == $usertable) {
                                         echo "<td id=\"$i $b\" class=\"success cell\">自用</td>";
