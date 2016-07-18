@@ -68,7 +68,7 @@
                     <button type="submit" id="login_button" class="btn btn-default" disabled="disabled">登录</button>
                 </div>
                 <div class="col-sm-offset-1 col-sm-2">
-                    <button type="button" class="btn btn-success" onclick="javascript:window.location.href='regester.php'">注册</button>
+                    <!--button type="button" class="btn btn-success" onclick="javascript:window.location.href='regester.php'">注册</button-->
                 </div>
             </div>
         </form>

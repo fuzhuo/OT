@@ -45,7 +45,7 @@
        </div>
        <div>
           <ul class="nav navbar-nav">
-             <li class=""><a href="system.php">OT统计</a></li>
+             <li class=""><a href="system.php">统计</a></li>
              <li class="active"><a href="#">闲聊</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
