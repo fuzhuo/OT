@@ -1,7 +1,8 @@
 <?php
     session_start();
-    //open db
-    $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
+    //connect to db
+    $dbconfig = include 'dbconfig.php';
+    $conn = new mysqli($dbconfig['host'],$dbconfig['user'],$dbconfig['password'],$dbconfig['dbname']);
     if ($conn->connect_error) {
         die("Error, connect db failed");
     } else {

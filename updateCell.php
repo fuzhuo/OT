@@ -4,7 +4,9 @@ if (isset($_POST['username']) && isset($_POST['tablename']) && isset($_POST['dat
     $tablename=$_POST['tablename'];//tablename is current user
     $date=$_POST['date'];//date row
     //die(json_encode(array('pass'=>1, 'log'=>"测试成功".$username.",".$tablename.",".$date)));
-    $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
+    //connect to db
+    $dbconfig = include 'dbconfig.php';
+    $conn = new mysqli($dbconfig['host'],$dbconfig['user'],$dbconfig['password'],$dbconfig['dbname']);
     if ($conn->connect_error) {
         die(json_encode(array('pass'=>0, 'log'=>"数据库连接失败了".$conn->connect_error)));
     }

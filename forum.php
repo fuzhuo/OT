@@ -27,7 +27,8 @@
     }
     $user_name=$_SESSION['username'];
     //connect to db
-    $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
+    $dbconfig = include 'dbconfig.php';
+    $conn = new mysqli($dbconfig['host'],$dbconfig['user'],$dbconfig['password'],$dbconfig['dbname']);
     if ($conn->connect_error) {
         die("Error, connect db failed");
     } else {
@@ -59,6 +60,8 @@
           </ul>
        </div>
     </nav>
+    <script src="jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
         <div class="container">
             <?php
             $sql="select * from _post where reply=md5('post') order by time desc";//Only for post

@@ -27,7 +27,8 @@
         }
         $user_name=$_SESSION['username'];
         //connect to db
-        $conn = new mysqli('127.0.0.1','root','vmmvmm','ot');
+        $dbconfig = include 'dbconfig.php';
+        $conn = new mysqli($dbconfig['host'],$dbconfig['user'],$dbconfig['password'],$dbconfig['dbname']);
         if ($conn->connect_error) {
             die("Error, connect db failed");
         } else {
@@ -35,7 +36,7 @@
         }
         $users = array();
         $dates = array();
-        for($i=1; $i<=60; $i++) {
+        for($i=60; $i>=1; $i--) {
             $today = time();
             $timestr = "+".($i-60)." days";
             $cur = strtotime($timestr, $today);
@@ -78,6 +79,7 @@
         <h1 style="text-align:center">OT统计</h1>
         <p><strong>单击点击</strong>表格区域，即改变自己对应的信息，名字按注册时间排序.</p>
         <p>大家一起维护才能保证数据的准确性，显示从今天起前两个月的信息，仅供参考，加前最好问问对方</p>
+        <p>最好维持小规模，如果需要可以自己搭一个，源码在这里<a href="https://github.com/fuzhuo/OT">fuzhuo/OT</a></p>
         <p>如有疑问，去<a href="forum.php">闲聊</a>里面吐槽吧!</p>
 
         <table class="table table-bordered">
@@ -92,7 +94,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php for($i=60; $i>=1; $i--) {
+                <?php for($i=1; $i<=60; $i++) {
                 ?>
                 <tr>
                     <?php
