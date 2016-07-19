@@ -1,8 +1,8 @@
 <?php
 return array(
-    'host'=>'192.168.2.246',
+    'host'=>'127.0.0.1',
     'dbname'=>'ot',
     'user'=>'root',
-    'password'=>'vmmvmm'
+    'password'=>'password'
 );
 ?>

@@ -5,6 +5,7 @@
 #搭建方法:
 
 * 在Linux上搭建好nginx + php-fpm环境
+* cp dbconfig.php.sample dbconfig.php
 * 修改数据库配置文件dbconfig.php，配置好host, user, password和使用的数据库名
 
 #nginx配置示例
