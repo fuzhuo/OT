@@ -108,9 +108,9 @@
                                 if ($row=$result->fetch_assoc()) {
                                     $find=true;
                                     if ($user_name == $usertable && $user_name == $userstr) {
-                                        echo "<td id=\"$i $b\" class=\"success cell\" style=\"color:#0000FF\">owner</td>";
+                                        echo "<td id=\"$i $b\" class=\"success cell\" style=\"color:#0000FF\">自用</td>";
                                     } else if ($userstr == $usertable) {
-                                        echo "<td id=\"$i $b\" class=\"success cell\">owner</td>";
+                                        echo "<td id=\"$i $b\" class=\"success cell\">自用</td>";
                                     } else {
                                         if ($userstr == $user_name) {
                                             echo "<td id=\"$i $b\" class=\"active cell\" style=\"color:#0000FF\">".$userstr."+</td>";
