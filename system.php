@@ -107,15 +107,18 @@
                             if ($result=$conn->query($sql)) {
                                 if ($row=$result->fetch_assoc()) {
                                     $find=true;
-                                    if ($user_name == $usertable && $user_name == $userstr) {
-                                        echo "<td id=\"$i $b\" class=\"success cell\" style=\"color:#0000FF\">自用</td>";
-                                    } else if ($userstr == $usertable) {
-                                        echo "<td id=\"$i $b\" class=\"success cell\">自用</td>";
+                                    if ($user_name == $usertable && $user_name == $userstr) {//自己用自己的
+                                        echo "<td id=\"$i $b\" class=\"danger cell\" style=\"color:#0000FF\">自用</td>";
+                                    } else if ($userstr == $usertable) {//别人用自己的
+                                        echo "<td id=\"$i $b\" class=\"active cell\"></td>";
                                     } else {
-                                        if ($userstr == $user_name) {
-                                            echo "<td id=\"$i $b\" class=\"active cell\" style=\"color:#0000FF\">".$userstr."+</td>";
-                                        } else {
+                                        if ($userstr == $user_name) {//自己加别人的
+                                            echo "<td id=\"$i $b\" class=\"danger cell\" style=\"color:#0000FF\">".$userstr."+</td>";
+                                        } else if ($usertable == $user_name) {//别人加自己的
                                             echo "<td id=\"$i $b\" class=\"active cell\">".$userstr."+</td>";
+                                        } else {//其它人加别人的
+                                            //echo "<td id=\"$i $b\" class=\"active cell\">".$userstr."+</td>";
+                                            echo "<td id=\"$i $b\" class=\"active cell\"></td>";
                                         }
                                     }
                                 }
@@ -134,8 +137,12 @@
             $conn->close();
         ?>
     </div>
+    <script src="jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="bootbox.min.js"></script>
       <script>
         $('.cell').click(function(e){
+            e.preventDefault();
             var col = parseInt($(this).index())-1;
             var row = parseInt($(this).parent().index())+1;
             a=""+row+" "+col;
@@ -150,28 +157,57 @@
                     echo "datestr[$i]='$curr';";
                 }
             ?>
-            //update database in background
-            $.ajax({
-                'url':'updateCell.php',
-                'data': {username:array[col], date:datestr[row-1], tablename:user},
-                'type':'post',
-                'dataType':'json',
-                success:function(res){
-                    if(res.pass==0) {
-                        alert("错误: " + res['log']);
-                        //alert($(this).innerHTML);
-                        //window.location.reload();
-                    } else if (res.pass==1) {
-                        //alert("pass=1" + res['log']);
-                        window.location.reload();
+            bootbox.confirm({
+                buttons: {
+                    confirm: {
+                        label: "确认",
+                    },
+                    cancel: {
+                        label: "取消",
                     }
                 },
-                error: function(){
-                    $(this).focus();
-                    //alert("请求失败");
-                    window.location.reload();
+                message: "确定改变此项?",
+                callback: function(confirm){
+                    if (confirm) {
+                        //update database in background
+                        $.ajax({
+                            'url':'updateCell.php',
+                            'data': {username:array[col], date:datestr[row-1], tablename:user},
+                            'type':'post',
+                            'dataType':'json',
+                            success:function(res){
+                                if(res.pass==0) {
+                                    //alert("错误: " + res['log']);
+                                    bootbox.alert("错误: " + res['log']);
+                                    //alert($(this).innerHTML);
+                                    //window.location.reload();
+                                } else if (res.pass==1) {
+                                    //alert("pass=1" + res['log']);
+                                    window.location.reload();
+                                }
+                            },
+                            error: function(){
+                                $(this).focus();
+                                //alert("请求失败");
+                                window.location.reload();
+                            }
+                        })
+                    } else {
+                        return;
+                    }
                 }
-            })
+            });
+            return;
+            $.confirm({
+                text: "确定改变此项?",
+                confirmButton: "确定",
+                cancelButton: "取消",
+                confirm: function() {
+                },
+                cancel: function(button) {
+                    return;
+                }
+            });
         });
       </script>
   </body>

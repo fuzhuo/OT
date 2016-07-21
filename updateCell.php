@@ -23,7 +23,7 @@ if (isset($_POST['username']) && isset($_POST['tablename']) && isset($_POST['dat
         $sql = "SELECT * FROM $table_ WHERE username='$username' and date='$date'";
         if ($result=$conn->query($sql)) {
             if ($row=$result->fetch_assoc()) {
-                die(json_encode(array('pass'=>0, 'log'=>"没有权限改变别人的项,请联系".$table_)));
+                die(json_encode(array('pass'=>0, 'log'=>"没有权限改变别人的项")));//,请联系".$table_)));
             }
         }
     }
